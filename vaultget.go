@@ -10,8 +10,14 @@ import (
 
 func main() {
     // Retrieve the Vault address and token from environment variables
-    vaultAddr := os.Getenv("VAULT_ADDR")
-    vaultToken := os.Getenv("VAULT_TOKEN")
+    vaultAddr, ok := os.LookupEnv("VAULT_ADDR")
+    if !ok {
+        log.Fatal("Vault address not set in VAULT_ADDR environment variable")
+    }
+    vaultToken, ok := os.LookupEnv("VAULT_TOKEN")
+    if !ok {
+        log.Fatal("Vault token not set in VAULT_TOKEN environment variable")
+    }
 
     // Create a new Vault client
     client, err := api.NewClient(&api.Config{
