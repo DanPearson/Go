@@ -1,0 +1,35 @@
+// Parse the JSON response data
+var responseData map[string]interface{}
+err = json.Unmarshal(apiRespBody, &responseData)
+if err != nil {
+    fmt.Println("Error parsing API response data:", err)
+    return
+}
+
+// Access the data in the response map
+status, ok := responseData["status"].(string)
+if !ok {
+    fmt.Println("Error parsing status field")
+    return
+}
+fmt.Println("Status:", status)
+
+data, ok := responseData["data"].(map[string]interface{})
+if !ok {
+    fmt.Println("Error parsing data field")
+    return
+}
+
+name, ok := data["name"].(string)
+if !ok {
+    fmt.Println("Error parsing name field")
+    return
+}
+fmt.Println("Name:", name)
+
+age, ok := data["age"].(float64)
+if !ok {
+    fmt.Println("Error parsing age field")
+    return
+}
+fmt.Println("Age:", age)
